@@ -20,9 +20,9 @@ with open('data.csv', 'r') as csv_file:
     for z in website:
         test_input = 'curl -s -o /dev/null -w "%{http_code}" ' + str(z)
         #Run CMD prompt and write the result into a file
-        subprocess.Popen(test_input + ' >> log.txt'.format(z),shell=True)
-        time.sleep(1.5)#Wait 1.5 seconds before testing next one, so processes won't overlap
-    
+        subprocess.Popen(test_input + ' >> log.txt'.format(z), shell=True)
+        time.sleep(15) # Wait 1.5 seconds before testing next one, so processes won't overlap
+
     #Read output from file and save it in the array
     file = open('log.txt', 'r')
     while True:
