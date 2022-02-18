@@ -11,6 +11,10 @@ nameplace = 'copy_of_'
 
 def copy_csv(filename):
   global nameplace
+  #If new data is empty write something in so it wont break
+  if os.stat(filename).st_size == 0:
+    with open(filename, 'w') as f:
+      f.write('null')
   df = pd.read_csv(filename)
   name = nameplace + filename
   if os.path.exists(name) and os.path.isfile(name):
