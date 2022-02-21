@@ -1,5 +1,4 @@
-import csv, subprocess, time, os
-import pandas as pd
+import csv, subprocess, time, os, shutil, logging
 
 #Variables
 website = []
@@ -8,6 +7,9 @@ web_count = 0
 empty = True
 size = os.path.getsize("log.txt")
 nameplace = 'copy_of_'
+data = []
+clean_data = []
+filtered_data = []
 
 def copy_csv(filename):
   global nameplace
@@ -15,13 +17,12 @@ def copy_csv(filename):
   if os.stat(filename).st_size == 0:
     with open(filename, 'w') as f:
       f.write('null')
-  df = pd.read_csv(filename)
   name = nameplace + filename
   if os.path.exists(name) and os.path.isfile(name):
     os.remove(name)
-    df.to_csv(name)
+    shutil.copyfile(filename, name)
   else:
-    df.to_csv(name)
+    shutil.copyfile(filename, name)
 
 #Check if file was previously empty or not
 if size > 0:
@@ -82,10 +83,14 @@ with open(file_path, 'r') as file:
     counter = 0
 
     for line in csv_reader:
+      print(line)
       #Write down all 3 exit codes
       line.append(status_code[counter])
       counter += 1
       csv_writer.writerow(line) 
     print("This execution status codes: ")
     print(status_code)
+
+
+
 print("Done with all the websites")
